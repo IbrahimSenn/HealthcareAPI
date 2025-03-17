@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HealthcareAPI.Controllers
 {
-    public class HospitalsController : Controller
+    [ApiController]
+    [Route("api/[controller]")]
+    public class HospitalsController : ControllerBase
     {
         private readonly HospitalService _hospitalService;
 

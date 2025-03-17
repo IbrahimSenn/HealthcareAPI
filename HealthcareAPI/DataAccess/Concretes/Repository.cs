@@ -1,11 +1,12 @@
 ﻿
+using HealthcareAPI.DataAccess.Abstracts;
 using HealthcareAPI.DataAccess.Contexts;
 using Microsoft.EntityFrameworkCore;
 
 namespace HealthcareAPI.DataAccess.Concretes
 {
 
-    public class Repository<T>  where T : class
+    public class Repository<T>  : IRepository<T> where T : class
     {
         private readonly AppDbContext _context;
         private readonly DbSet<T> _dbSet;

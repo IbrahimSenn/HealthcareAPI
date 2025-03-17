@@ -1,19 +1,29 @@
 ﻿using HealthcareAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace HealthcareAPI.Controllers
+[ApiController]
+[Route("api/[controller]")]
+public class DoctorsController : ControllerBase
 {
-    public class DoctorsController : Controller
+    private readonly DoctorService _doctorService;
+
+    // DoctorService injection
+    public DoctorsController(DoctorService doctorService)
     {
-        private readonly DoctorService _doctorService;
+        _doctorService = doctorService;
+    }
 
-        public DoctorsController(DoctorService doctorService)
+    [HttpGet]
+    public async Task<IActionResult> GetDoctors()
+    {
+        try
         {
-            _doctorService = doctorService;
+            var doctors = await _doctorService.GetDoctorsAsync();
+            return Ok(doctors);
         }
-
-        [HttpGet]
-        public async Task<IActionResult> GetDoctors() => Ok(await _doctorService.GetDoctorsAsync());
-
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"Internal server error: {ex.Message}");
+        }
     }
 }
